@@ -1,0 +1,28 @@
+## .NET
+bin/
+obj/
+artifacts/
+*.user
+*.suo
+.vs/
+
+## Build / test output
+[Dd]ebug/
+[Rr]elease/
+TestResults/
+*.trx
+*.coverage
+coverage/
+
+## Rider / VS Code
+.idea/
+.vscode/
+
+## DeltaLinq scratch
+*.log
+
+## Claude Code / local tooling (never publish)
+.claude/
+
+## Original brainstorm note (kept locally, not published)
+delta lake sdk.txt

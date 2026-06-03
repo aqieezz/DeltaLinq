@@ -1,0 +1,48 @@
+name: release
+
+# Publishes to nuget.org when you push a version tag, e.g.:
+#   git tag v0.1.0 && git push origin v0.1.0
+# Requires a repository secret named NUGET_API_KEY.
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      - name: Derive version from tag
+        id: ver
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Restore
+        run: dotnet restore DeltaLinq.sln
+
+      - name: Build
+        run: dotnet build DeltaLinq.sln -c Release --no-restore
+
+      - name: Test
+        run: dotnet test DeltaLinq.sln -c Release --no-build --verbosity normal
+
+      - name: Pack
+        run: |
+          dotnet pack src/DeltaLinq/DeltaLinq.csproj -c Release -o artifacts -p:Version=${{ steps.ver.outputs.version }}
+          dotnet pack src/DeltaLinq.DependencyInjection/DeltaLinq.DependencyInjection.csproj -c Release -o artifacts -p:Version=${{ steps.ver.outputs.version }}
+
+      - name: Push to NuGet
+        run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nupkg
+          path: artifacts/*

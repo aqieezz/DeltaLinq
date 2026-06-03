@@ -1,0 +1,33 @@
+<Project>
+
+  <!-- Shared settings for every project in the repo. -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- Ship XML docs where present, but don't require a doc comment on every public member. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Package metadata applied to packable projects (libraries opt in with IsPackable=true). -->
+  <PropertyGroup>
+    <Authors>Aqil Abbas Khan</Authors>
+    <Company>Aqil Abbas Khan</Company>
+    <Product>DeltaLinq</Product>
+    <Copyright>Copyright (c) Aqil Abbas Khan</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/aqieezz/DeltaLinq</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/aqieezz/DeltaLinq</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>delta-lake;deltalake;linq;iqueryable;lakehouse;duckdb;parquet;arrow;analytics</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+</Project>
